@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance { get; private set; }
     public static event Action OnInteractAction;
+    private Vector2 moveInput;
 
     private void Awake()
     {
@@ -30,5 +31,13 @@ public class InputManager : MonoBehaviour
             // '?' 是一个安全检查，确保有脚本订阅了这个事件才广播，防止报错
             OnInteractAction?.Invoke();
         }
+
+        moveInput.x = Input.GetAxis("Horizontal"); // A/D键 或 左右箭头
+        moveInput.y = Input.GetAxis("Vertical");   // W/S键 或 上下箭头
+    }
+
+    public Vector2 GetMoveInput()
+    {
+        return moveInput;
     }
 }

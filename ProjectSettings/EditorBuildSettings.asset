@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Project/Scenes/Core.unity
+    guid: 93208c3f15262014e82a33e244afb5a6
+  - enabled: 1
+    path: Assets/_Project/Scenes/Level_01_BeiMing.unity
+    guid: 45fd7e1b3096dfc4bbd999909a84d246
   m_configObjects: {}

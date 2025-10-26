@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; // 必须引入场景管理命名空间
 
 public class SceneLoader : MonoBehaviour
 {
@@ -8,7 +7,6 @@ public class SceneLoader : MonoBehaviour
 
     private void Awake()
     {
-        // 单例
         if (Instance == null)
         {
             Instance = this;
@@ -16,7 +14,14 @@ public class SceneLoader : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // 如果已存在实例，则销毁此重复对象
+            Destroy(gameObject);
         }
+    }
+
+    // --- 新增的加载方法 ---
+    public void LoadScene(string sceneName)
+    {
+        // 使用Unity的场景管理器来加载场景
+        SceneManager.LoadScene(sceneName);
     }
 }

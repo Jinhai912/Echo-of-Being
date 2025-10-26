@@ -3,40 +3,60 @@ using UnityEngine;
 public class PlayerInteractor : MonoBehaviour
 {
     [Header("交互设置")]
-    [SerializeField] private float interactionDistance = 3f;
-    private Camera playerCamera;
+    [Tooltip("以玩家为中心，检测可交互物的半径")]
+    [SerializeField] private float interactionRadius = 1.5f; // “交互气泡”的半径
 
-    void Start()
+    // Unity 编辑器生命周期函数，方便我们在场景视图中看到这个“气泡”的范围
+    private void OnDrawGizmosSelected()
     {
-        playerCamera = Camera.main;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, interactionRadius);
     }
 
-    // 当该组件被激活时调用 (比Start更早，且每次激活都调用)
     private void OnEnable()
     {
-        // 向 InputManager “订阅” OnInteractAction 事件
-        // 意思是：“当 OnInteractAction 事件发生时，请调用我的 PerformInteractionCheck 方法”
         InputManager.OnInteractAction += PerformInteractionCheck;
     }
 
-    // 当该组件被禁用或销毁时调用
     private void OnDisable()
     {
-        // 非常重要：必须“取消订阅”事件，否则可能导致内存泄漏和错误
         InputManager.OnInteractAction -= PerformInteractionCheck;
     }
 
-    // 这个方法现在不再由 Update 调用，而是由 InputManager 的事件来触发
     private void PerformInteractionCheck()
     {
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        // 核心改动：不再使用射线，而是使用“重叠球体”检测
+        // Physics.OverlapSphere 会返回一个数组，包含所有与指定球体接触的碰撞体
+        Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRadius);
 
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, interactionDistance))
+        // 为了防止同时与多个物体交互，我们只选择最近的那个
+        float closestDistance = float.MaxValue;
+        IInteractable closestInteractable = null;
+
+        // 遍历所有在“气泡”内的物体
+        foreach (Collider collider in colliders)
         {
-            if (hitInfo.collider.TryGetComponent(out IInteractable interactableObject))
+            // 检查这个物体上是否有 IInteractable 接口
+            if (collider.TryGetComponent(out IInteractable interactableObject))
             {
-                interactableObject.Interact(this.gameObject);
+                // 计算玩家与这个物体的距离
+                float distance = Vector3.Distance(transform.position, collider.transform.position);
+
+                // 如果这个物体比我们之前找到的“最近的”还要近
+                if (distance < closestDistance)
+                {
+                    // 就更新“最近的”记录
+                    closestDistance = distance;
+                    closestInteractable = interactableObject;
+                }
             }
+        }
+
+        // 循环结束后，如果找到了一个最近的可交互物
+        if (closestInteractable != null)
+        {
+            // 就只与它进行交互
+            closestInteractable.Interact(this.gameObject);
         }
     }
 }
