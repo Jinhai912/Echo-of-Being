@@ -8,6 +8,6 @@ public class Bootstrapper : MonoBehaviour
     {
         // 调用SceneLoader单例，加载我们的第一个游戏关卡
         // 注意：这里的场景名字 "Level_01_BeiMing" 必须和你创建的场景文件名完全一致
-        SceneLoader.Instance.LoadScene("Level_01_BeiMing");
+        SceneLoader.Instance.LoadScene("MainMenu");
     }
 }

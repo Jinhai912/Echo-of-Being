@@ -9,6 +9,18 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/Core.unity
     guid: 93208c3f15262014e82a33e244afb5a6
   - enabled: 1
+    path: Assets/_Project/Scenes/MainMenu.unity
+    guid: 5ac6f2e78bfc46749983c785711acffe
+  - enabled: 1
     path: Assets/_Project/Scenes/Level_01_BeiMing.unity
     guid: 45fd7e1b3096dfc4bbd999909a84d246
+  - enabled: 1
+    path: Assets/_Project/Scenes/Level_02_TianLai.unity
+    guid: cecfdf6ca5d57e54c80a46ffbe9b90b8
+  - enabled: 1
+    path: Assets/_Project/Scenes/Level_03_NanMing.unity
+    guid: 3c8e13244ad981f409579585440a470e
+  - enabled: 1
+    path: Assets/_Project/Scenes/Level_04_BeiMing_Return.unity
+    guid: bce3054678d1a1d468c64c364525a6ea
   m_configObjects: {}

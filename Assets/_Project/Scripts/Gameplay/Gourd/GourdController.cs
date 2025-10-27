@@ -8,7 +8,8 @@ public class GourdController : MonoBehaviour, IInteractable
     {
         // 在控制台打印一条信息，来验证交互是否成功
         Debug.Log(interactor.name + " 正在与葫芦交互！");
-
+        // 加载第二关
+        SceneLoader.Instance.LoadScene("Level_02_TianLai");
         
     }
 }
