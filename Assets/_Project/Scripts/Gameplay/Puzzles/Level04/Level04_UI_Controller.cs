@@ -22,4 +22,5 @@ public class Level04_UI_Controller : MonoBehaviour
         // 直接加载我们游戏的主菜单场景，实现完美的循环
         SceneLoader.Instance.LoadScene("MainMenu");
     }
+    
 }
